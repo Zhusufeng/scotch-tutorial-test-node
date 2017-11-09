@@ -15,11 +15,9 @@ let config = require('config');
 // db options
 let options = {
   server: {
-    {
-      socketOptions: {
-        keepAlive: 1,
-        connectTimeoutMS: 30000
-      },
+    socketOptions: {
+      keepAlive: 1,
+      connectTimeoutMS: 30000
     },
   },
   replset: {
