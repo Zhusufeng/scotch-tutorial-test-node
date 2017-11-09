@@ -2,6 +2,7 @@ let express = require('express');
 // create instance of express
 let app = express();
 
+// require modules
 let mongoose = require('mongoose');
 let morgan = require('morgan');
 let bodyParser = require('body-parser');
@@ -35,10 +36,11 @@ db.on('error', console.error.bind(console, 'connection: error:'));
 
 // don't show the log when it is test
 if (config.util.getEnv('NODE_ENV') !== 'test') {
-  // use morgan to log at command line
+  // use morgan to log at command line so as to not interfere with test output
   app.use(morgan('combined')); // 'combined' outputs the Apache style LOGs
 }
 
+// header options
 // parse application/json and look for raw text
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -59,4 +61,5 @@ app.route('/book/:id')
 app.listen(port);
 console.log('Listening on port ' + port);
 
+// export the server for testing purposes
 module.exports = app;
