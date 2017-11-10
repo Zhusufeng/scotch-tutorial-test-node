@@ -13,3 +13,20 @@ function getBooks(req, res) {
     res.json(books);
   });
 }
+
+/*
+ * POST /book route to save a new book
+ */
+function postBook(req, res) {
+  // create new book (from our model)
+  var newBook = new Book(req.body);
+  // save it into the DB
+  newBook.save((err, book) => {
+    if (err) {
+      res.send(err);
+    } else {
+     // if no err, send it back to the client
+     res.json({message: 'Book successfully added!', book});
+    }
+  });
+}
