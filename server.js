@@ -6,6 +6,7 @@ let app = express();
 let mongoose = require('mongoose');
 let morgan = require('morgan');
 let bodyParser = require('body-parser');
+let router = express.Router();
 
 let port = 8080;
 let book = ('./app/routes/book');
@@ -33,10 +34,10 @@ let db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection: error:'));
 
 // don't show the log when it is test
-if (config.util.getEnv('NODE_ENV') !== 'test') {
-  // use morgan to log at command line so as to not interfere with test output
-  app.use(morgan('combined')); // 'combined' outputs the Apache style LOGs
-}
+// if (config.util.getEnv('NODE_ENV') !== 'test') {
+//   // use morgan to log at command line so as to not interfere with test output
+//   app.use(morgan('combined')); // 'combined' outputs the Apache style LOGs
+// }
 
 // header options
 // parse application/json and look for raw text
@@ -48,13 +49,12 @@ app.use(bodyParser.json({ type: 'application/json' }));
 // end points
 app.get('/', (req, res) => res.json({ message: 'Welcome to our Bookstore!' }));
 
-app.route('/book')
-  .get(book.getBooks)
-  .post(book.postBook);
-app.route('/book/:id')
-  .get(book.getBook)
-  .delete(book.deleteBook)
-  .put(book.updateBook);
+router.get('/book', book.getBooks);
+route.post('/book', book.postBook);
+
+router.get('/book/:id', book.getBook);
+router.delete('/book/:id', book.deleteBook);
+router.put('/book/:id', book.updateBook);
 
 app.listen(port);
 console.log('Listening on port ' + port);
