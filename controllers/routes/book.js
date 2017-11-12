@@ -41,3 +41,13 @@ function getBook(req, res) {
     res.json(book);
   });
 }
+
+/*
+ * DELETE /book/:id route to retrieve a book given its id
+ */
+function deleteBook(req, res) {
+  Book.remove({_id: req.params.id}, (err, result) => {
+    if (err) console.error('You had a delete error: ', err);
+    res.json({ message: 'Book successfully deleted!', result });
+  });
+}
