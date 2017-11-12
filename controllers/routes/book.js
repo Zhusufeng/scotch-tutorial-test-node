@@ -51,3 +51,16 @@ function deleteBook(req, res) {
     res.json({ message: 'Book successfully deleted!', result });
   });
 }
+
+/*
+ * PUT /book/:id to update a book given its id
+ */
+ function updateBook(req, res) {
+  Book.findById({_id: req.params.id}, (err, book) => {
+    if(err) res.send(err);
+    Object.assign(book, req.body).save((err, book) => {
+      if(err) res.send(err);
+      res.json({ message: 'Book updated!', book});
+    })
+  });
+ }
