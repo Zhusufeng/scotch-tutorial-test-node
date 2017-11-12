@@ -6,10 +6,10 @@ let app = express();
 let mongoose = require('mongoose');
 let morgan = require('morgan');
 let bodyParser = require('body-parser');
-let router = express.Router();
+// let router = express.Router();
 
 let port = 8080;
-let book = ('./app/routes/book');
+let book = require('./controllers/routes/book.js');
 
 // get db location
 let config = require('config');
@@ -49,12 +49,19 @@ app.use(bodyParser.json({ type: 'application/json' }));
 // end points
 app.get('/', (req, res) => res.json({ message: 'Welcome to our Bookstore!' }));
 
-router.get('/book', book.getBooks);
-route.post('/book', book.postBook);
+// router.get('/book', book.getBooks);
+// route.post('/book', book.postBook);
 
-router.get('/book/:id', book.getBook);
-router.delete('/book/:id', book.deleteBook);
-router.put('/book/:id', book.updateBook);
+// router.get('/book/:id', book.getBook);
+// router.delete('/book/:id', book.deleteBook);
+// router.put('/book/:id', book.updateBook);
+app.route("/book")
+    .get(book.getBooks)
+    .post(book.postBook);
+app.route("/book/:id")
+    .get(book.getBook)
+    .delete(book.deleteBook)
+    .put(book.updateBook);
 
 app.listen(port);
 console.log('Listening on port ' + port);
