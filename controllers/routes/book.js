@@ -58,6 +58,7 @@ function deleteBook(req, res) {
  function updateBook(req, res) {
   Book.findById({_id: req.params.id}, (err, book) => {
     if(err) res.send(err);
+    // Object.assign overrides the common properties of book
     Object.assign(book, req.body).save((err, book) => {
       if(err) res.send(err);
       res.json({ message: 'Book updated!', book});
@@ -65,5 +66,5 @@ function deleteBook(req, res) {
   });
  }
 
-// export all functions
+// export all functions using ES6
  module.exports = { getBooks, postBook, getBook, deleteBook, updateBook };
