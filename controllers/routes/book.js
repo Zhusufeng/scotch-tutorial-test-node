@@ -67,4 +67,4 @@ function deleteBook(req, res) {
  }
 
 // export all functions using ES6
- module.exports = { getBooks, postBook, getBook, deleteBook, updateBook };
+module.exports = { getBooks, postBook, getBook, deleteBook, updateBook };
