@@ -64,3 +64,6 @@ function deleteBook(req, res) {
     })
   });
  }
+
+// export all functions
+ module.exports = { getBooks, postBook, getBook, deleteBook, updateBook };
