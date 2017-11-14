@@ -18,7 +18,7 @@ let BookSchema = new Schema(
     },
     pages: {
       type: Number,
-      require: true,
+      required: true,
       min: 1
     },
     createdAt: {
