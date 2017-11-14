@@ -15,19 +15,10 @@ let book = require('./controllers/routes/book.js');
 let config = require('config');
 // db options
 let options = {
-  server: {
-    socketOptions: {
-      keepAlive: 1,
-      connectTimeoutMS: 30000
-    },
-  },
-  replset: {
-    socketOptions: {
-      keepAlive: 1,
-      connectTimeoutMS: 30000
-    }
-  }
+  socketTimeoutMS: 30000,
+  keepAlive: true,
 };
+
 // db connection
 mongoose.connect(config.DBHost, options);
 let db = mongoose.connection;
