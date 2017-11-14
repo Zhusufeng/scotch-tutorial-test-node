@@ -43,7 +43,7 @@ describe('Books', () => {
   describe('/POST book', () => {
     it('should not POST a book without pages field', (done) => {
       let book = {
-        title: 'Harry Potter and the Sorceror\s Stone',
+        title: 'Harry Potter and the Sorceror\'s Stone',
         author: 'J. K. Rowling',
         year: 1900
       };
@@ -53,9 +53,32 @@ describe('Books', () => {
         .end((err, res) => {
           res.should.have.status(200);
           res.body.should.be.a('object');
+          // console.log(res.body);
           res.body.should.have.property('errors');
           res.body.errors.should.have.property('pages');
           res.body.errors.pages.should.have.property('kind').eql('required');
+        done();
+        });
+    });
+
+    it('should POST a book', (done) => {
+      let book = {
+        title: 'Harry Potter and the Sorceror\'s Stone',
+        author: 'J. K. Rowling',
+        year: 1900,
+        pages: 250,
+      };
+      chai.request(server)
+        .post('/book')
+        .send(book)
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.body.should.be.a('object');
+          res.body.should.have.property('message').eql('Book successfully added!');
+          res.body.book.should.have.property('title');
+          res.body.book.should.have.property('author');
+          res.body.book.should.have.property('pages');
+          res.body.book.should.have.property('year');
         done();
         });
     });
