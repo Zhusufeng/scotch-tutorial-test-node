@@ -143,4 +143,30 @@ describe('Books', () => {
       });
     });
   });
+
+  /*
+  *  Test the /DELETE/:id route
+  */
+  describe('/DELETE/:id book', () => {
+    it('should DELETE a book given the id', (done) => {
+      let book = new Book ({
+        title: 'The Chronicles of Narnia',
+        author: 'C. S. Lewis',
+        pages: 778,
+        year: 1948
+      });
+      book.save((err, book) => {
+        chai.request(server)
+          .delete('/book/' + book.id)
+          .end((err, res) => {
+            res.should.have.status(200);
+            res.body.should.be.a('object');
+            res.body.should.have.property('message').eql('Book successfully delete!');
+            res.body.result.should.have.property('ok').eql(1);
+            res.body.result.should.have.property('n').eql(1);
+          done();
+          });
+      });
+    });
+  });
 });
