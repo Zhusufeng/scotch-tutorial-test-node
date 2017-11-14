@@ -38,13 +38,42 @@ describe('Books', () => {
   });
 
   /*
+  *  Test the /GET/:id route
+  */
+  describe('/GET/:id book', () => {
+    it('should GET a book by the given id', (done) => {
+      let book = new Book({
+        title: 'The Lord of the Rings',
+        author: 'J. R. R. Tolkien',
+        year: 1954,
+        pages: 1170
+      });
+      book.save((err, book) => {
+        chai.request(server)
+          .get('/book/' + book.id)
+          .send(book)
+          .end((err, res) => {
+            res.should.have.status(200);
+            res.body.should.be.a('object');
+            res.body.should.have.property('title');
+            res.body.should.have.property('author');
+            res.body.should.have.property('pages');
+            res.body.should.have.property('year');
+            res.body.should.have.property('_id').eql(book.id);
+          done();
+          });
+      })
+    });
+  });
+
+  /*
   *  Test the /POST route
   */
   describe('/POST book', () => {
     it('should not POST a book without pages field', (done) => {
       let book = {
-        title: 'Harry Potter and the Sorceror\'s Stone',
-        author: 'J. K. Rowling',
+        title: 'The Lord of the Rings',
+        author: 'J. R. R. Tolkien',
         year: 1900
       };
       chai.request(server)
@@ -63,8 +92,8 @@ describe('Books', () => {
 
     it('should POST a book', (done) => {
       let book = {
-        title: 'Harry Potter and the Sorceror\'s Stone',
-        author: 'J. K. Rowling',
+        title: 'The Lord of the Rings',
+        author: 'J. R. R. Tolkien',
         year: 1900,
         pages: 250,
       };
